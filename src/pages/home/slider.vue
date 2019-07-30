@@ -1,11 +1,16 @@
 <template>
-  <szh-slider>
+  <szh-slider
+  :direction="direction"
+  :loop="loop"
+  :interval="interval"
+  :pagination="pagination"
+  >
     <swiper-slide
       v-for="(item, index) in sliders"
       :key="index"
     >
       <a :href="item.linkUrl">
-        <img :src="item.picUrl" alt="">
+        <img :src="item.picUrl" alt="" class="slider-link">
       </a>
     </swiper-slide>
   </szh-slider>

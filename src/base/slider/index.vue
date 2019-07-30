@@ -14,7 +14,7 @@
       swiper
     },
     props: {
-      direaction: {
+      direction: {
         type: String,
         default: 'horizontal',
         validator(value) {
@@ -22,29 +22,29 @@
             'horizontal',
             'vertical'
           ].indexOf(value) > -1;
-        },
-        interval: {
-          type: Number,
-          default: 3000,
-          validator(value) {
-            return value >= 0;
-          }
-        },
-        loop: {
-          type: Boolean,
-          default: true
-        },
-        pagination: {
-          type: Boolean,
-          default: true
         }
+      },
+      interval: {
+        type: Number,
+        default: 3000,
+        validator(value) {
+          return value >= 0;
+        }
+      },
+      loop: {
+        type: Boolean,
+        default: true
+      },
+      pagination: {
+        type: Boolean,
+        default: true
       }
     },
     data() {
       return {
         swiperOption: {
           watchOverflow: true,
-          direaction: this.direaction,
+          direction: this.direction,
           autoplay: this.interval ? {
             delay: this.interval,
             disableOnInteraction: false
