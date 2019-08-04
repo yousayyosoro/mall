@@ -14,7 +14,7 @@
     </h1>
   </div>
 </template>
-
+// 基础导航组件配置
 <script>
 
   export default {

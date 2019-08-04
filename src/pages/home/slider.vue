@@ -1,11 +1,12 @@
 <template>
   <div class="slider-wrapper">
+    <szh-loading v-if="!sliders.length"></szh-loading>
     <szh-slider
       :direction="direction"
       :loop="loop"
       :interval="interval"
       :pagination="pagination"
-      v-if="sliders.length"
+      v-else
     >
       <swiper-slide
         v-for="(item, index) in sliders"
@@ -24,12 +25,14 @@
   import {swiperSlide} from 'vue-awesome-swiper';
   import {sliderOptions} from './config';
   import {getHomeSlider} from 'api/home';
+  import SzhLoading from 'base/loading';
 
   export default {
     name: 'HomeSlider',
     components: {
       SzhSlider,
-      swiperSlide
+      swiperSlide,
+      SzhLoading
     },
     data() {
       return {
@@ -38,22 +41,22 @@
         interval: sliderOptions.interval,
         pagination: sliderOptions.pagination,
         sliders: [
-          {
-            'linkUrl': 'https://www.imooc.com',
-            'picUrl': require('./1.jpg')
-          },
-          {
-            'linkUrl': 'https://www.imooc.com',
-            'picUrl': require('./2.jpg')
-          },
-          {
-            'linkUrl': 'https://www.imooc.com',
-            'picUrl': require('./3.jpg')
-          },
-          {
-            'linkUrl': 'https://www.imooc.com',
-            'picUrl': require('./4.jpg')
-          }
+          // {
+          //   'linkUrl': 'https://www.imooc.com',
+          //   'picUrl': require('./1.jpg')
+          // },
+          // {
+          //   'linkUrl': 'https://www.imooc.com',
+          //   'picUrl': require('./2.jpg')
+          // },
+          // {
+          //   'linkUrl': 'https://www.imooc.com',
+          //   'picUrl': require('./3.jpg')
+          // },
+          // {
+          //   'linkUrl': 'https://www.imooc.com',
+          //   'picUrl': require('./4.jpg')
+          // }
         ]
       };
     },

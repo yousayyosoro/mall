@@ -4,10 +4,11 @@
     <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
   </swiper>
 </template>
-
+// 配置基础的轮播组件
 <script>
+  // 导入vue-awesome-swiper插件
   import {swiper} from 'vue-awesome-swiper';
-
+  // 配置基础swiper参数
   export default {
     name: 'SzhSlider',
     components: {
@@ -16,7 +17,7 @@
     props: {
       direction: {
         type: String,
-        default: 'horizontal',
+        default: 'horizontal', // 默认水平滚动方向
         validator(value) {
           return [
             'horizontal',
@@ -26,18 +27,18 @@
       },
       interval: {
         type: Number,
-        default: 3000,
+        default: 3000, // 默认自动滚动间距
         validator(value) {
           return value >= 0;
         }
       },
       loop: {
         type: Boolean,
-        default: true
+        default: true // 默认自动循环滚动
       },
       pagination: {
         type: Boolean,
-        default: true
+        default: true // 默认开启分页器
       }
     },
     data() {

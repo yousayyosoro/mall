@@ -1,10 +1,46 @@
+// 导入axios插件\jsonp解析参数文件\config文件
 import axios from 'axios';
+import {SUCCEED_CODE, SETTIMEOUT, HOME_RECOMMEND_PAGE_SIZE, jsonpOptions} from 'api/config';
+import jsonp from '../assets/js/jsonp';
 
 // 获取轮播图片数据
 export const getHomeSlider = () => {
-  return axios.get('http://www.imooc.com/api/home/slider').then(res => {
-    if (res.data.code === 0) {
+  return axios.get('http://www.imooc.com/api/home/slider', {timeout: SETTIMEOUT}).then(res => {
+    if (res.data.code === SUCCEED_CODE) {
       return res.data.slider;
-    };
+    }
+    throw new Error('数据错误');
+  }).catch(err => {
+    if (err) {
+      console.log(err);
+    }
+    return [
+      {
+        linkUrl: 'https://www.imooc.com',
+        picUrl: require('assets/img/404.png')
+      }
+    ];
+  }).then(data => {
+    return new Promise(resolve => {
+      setTimeout(() => { // 测试用延迟方法
+        resolve(data);
+      }, 1000);
+    });
+  });
+};
+// 通过jsonp获取热卖数据
+export const getHomeRecommend = (page = 1, psize = HOME_RECOMMEND_PAGE_SIZE) => {
+  const url = 'https://ju.taobao.com/json/tg/ajaxGetItemsV2.json';
+  const params = {
+    page,
+    psize,
+    type: 0,
+    frontCatId: ''
+  };
+
+  return jsonp(url, params, jsonpOptions).then(res => {
+    if (res.code === '200') {
+      return res;
+    }
   });
 };
