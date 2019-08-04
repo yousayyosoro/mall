@@ -2,6 +2,7 @@
   <div class="slider-wrapper">
     <szh-loading v-if="!sliders.length"></szh-loading>
     <szh-slider
+      :data="sliders"
       :direction="direction"
       :loop="loop"
       :interval="interval"
@@ -64,8 +65,11 @@
       this.getSlider();
     },
     methods: {
+      update() {
+        return this.getSlider();
+      },
       getSlider() {
-        getHomeSlider().then(data => {
+        return getHomeSlider().then(data => {
           this.sliders = data;
         });
       }

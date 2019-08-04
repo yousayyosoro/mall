@@ -4,8 +4,11 @@
 
       <home-header></home-header>
     </header>
+<!--    滚动条组件-->
     <szh-scroll :watchedData="recommends" @pull-down="pullToRefresh">
-      <home-slider></home-slider>
+<!--      幻灯片组件-->
+      <home-slider ref="slider"></home-slider>
+<!--      顶部导航组件-->
       <home-nav></home-nav>
       <home-recommend @loaded="getRecommends"></home-recommend>
     </szh-scroll>
@@ -42,9 +45,10 @@
         this.recommends = recommends;
       },
       pullToRefresh(end) {
-        setTimeout(() => {
-          end();
-        }, 1000);
+        this.$refs.slider.update().then(end);
+        // setTimeout(() => {
+        //   end();
+        // }, 1000);
       }
     }
   };

@@ -1,10 +1,10 @@
 <template>
-  <swiper :options="swiperOption">
+  <swiper :options="swiperOption" :key="keyId">
     <slot></slot>
     <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
   </swiper>
 </template>
-// 配置基础的轮播组件
+<!--配置基础的轮播组件-->
 <script>
   // 导入vue-awesome-swiper插件
   import {swiper} from 'vue-awesome-swiper';
@@ -39,10 +39,17 @@
       pagination: {
         type: Boolean,
         default: true // 默认开启分页器
+      },
+      data: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
     },
     data() {
       return {
+        keyId: Math.random(),
         swiperOption: {
           watchOverflow: true,
           direction: this.direction,
@@ -57,6 +64,14 @@
           }
         }
       };
+    },
+    watch: {
+      data(newData) {
+        if (newData.length === 0) {
+          return;
+        }
+        this.keyId = Math.random();
+      }
     }
   };
 </script>

@@ -6,7 +6,7 @@
     <span class="szh-loading-text" v-if="loadingText">{{loadingText}}</span>
   </div>
 </template>
-// 加载中的基础组件参数配置
+<!-- 加载中的基础组件参数配置-->
 <script>
   export default {
     name: 'SzhLoading',
