@@ -1,5 +1,7 @@
 # mall
 
+![travis-ci](https://travis-ci.com/kamanraida/mall.svg?branch=master)
+
 > 在线商城webApp
 
 ## Build Setup
