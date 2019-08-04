@@ -1,0 +1,5 @@
+# 自动构建文件
+language: node_js
+node_js:
+  - "10"
+cache: npm
