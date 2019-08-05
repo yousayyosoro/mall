@@ -1,2 +1,0 @@
-webpackJsonp([2],{lON5:function(t,e){},taF9:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var c={render:function(){var t=this.$createElement;return(this._self._c||t)("div",{staticClass:"product"},[this._v("Product")])},staticRenderFns:[]};var r=n("VU/8")({name:"Product"},c,!1,function(t){n("lON5")},"data-v-bfa9c9c2",null);e.default=r.exports}});
-//# sourceMappingURL=2.7f30cd2a21a5f9f8ca43.js.map
