@@ -4,6 +4,13 @@ node_js:
   - "10"
 cache: npm
 
+branches:
+  only:
+    - master
+
+script:
+  - npm run build
+
 deploy:
   provider: pages
   skip_cleanup: true
