@@ -16,7 +16,7 @@ const shuffle = (arr) => {
 };
 // 获取轮播图片数据
 export const getHomeSlider = () => {
-  return axios.get('http://www.imooc.com/api/home/slider', {timeout: SETTIMEOUT}).then(res => {
+  return axios.get('https://www.imooc.com/api/home/slider', {timeout: SETTIMEOUT}).then(res => {
     if (res.data.code === SUCCEED_CODE) {
       let randomSliders = res.data.slider;
       // console.log(typeof (randomSliders)); //  =>是个对象,长度为10
