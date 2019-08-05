@@ -14,7 +14,6 @@ deploy:
   github_token: $GITHUB_TOKEN
   keep_history: true
   verbose: true
-  script:
-    - npm run build
+  local_dir: ./dist/
   on:
     branch: master
