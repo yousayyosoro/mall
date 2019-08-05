@@ -1,6 +1,6 @@
 # mall
 
-![travis-ci](https://travis-ci.com/kamanraida/mall.svg?branch=master)
+[![Build Status](https://travis-ci.org/yousayyosoro/mall.svg?branch=master)](https://travis-ci.org/yousayyosoro/mall)
 
 > 在线商城webApp
 
