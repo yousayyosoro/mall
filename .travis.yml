@@ -3,3 +3,20 @@ language: node_js
 node_js:
   - "10"
 cache: npm
+
+branches:
+  only:
+    - master
+
+script:
+  - npm run build
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  verbose: true
+  local_dir: ./dist/
+  on:
+    branch: master
