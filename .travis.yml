@@ -8,14 +8,13 @@ branches:
   only:
     - master
 
-script:
-  - npm run build
-
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
   verbose: true
+  script:
+    - npm run build
   on:
     branch: master
