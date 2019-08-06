@@ -1,4 +1,5 @@
 <template>
+  <!--  幻灯片组件-->
   <swiper :options="swiperOption" :key="keyId">
     <slot></slot>
     <div class="swiper-pagination" v-if="pagination" slot="pagination"></div>
@@ -40,7 +41,7 @@
         type: Boolean,
         default: true // 默认开启分页器
       },
-      data: {
+      data: { // 获取到的data对象数组
         type: Array,
         default() {
           return [];
@@ -49,20 +50,7 @@
     },
     data() {
       return {
-        keyId: Math.random(),
-        swiperOption: {
-          watchOverflow: true,
-          direction: this.direction,
-          autoplay: this.interval ? {
-            delay: this.interval,
-            disableOnInteraction: false
-          } : false,
-          slidesPerView: 1,
-          loop: this.loop,
-          pagination: {
-            el: this.pagination ? '.swiper-pagination' : null
-          }
-        }
+        keyId: Math.random()
       };
     },
     watch: {
@@ -71,6 +59,27 @@
           return;
         }
         this.keyId = Math.random();
+        this.loop = this.swiperOption.loop === 1 ? false : this.loop;
+      }
+    },
+    created() {
+      this.init();
+    },
+    methods: {
+      init() {
+        this.swiperOption = {
+          watchOverflow: true,
+          direction: this.direction,
+          autoplay: this.interval ? {
+            delay: this.interval,
+            disableOnInteraction: false
+          } : false,
+          slidesPerView: 1,
+          loop: this.data.length === 1 ? false : this.loop,
+          pagination: {
+            el: this.pagination ? '.swiper-pagination' : null
+          }
+        };
       }
     }
   };

@@ -1,6 +1,6 @@
 <template>
 
-  <me-navbar class="header" title="123我abcdefghijklmmopqrstuvwsyz">
+  <me-navbar class="header" title="搜索框">
     <i class="iconfont icon-scan" slot="left"></i>
     <!--    <i class="iconfont icon-scan" slot="center"></i>-->
     <!--    <div slot="center">搜索框</div>-->
