@@ -68,14 +68,44 @@
         default: true
       }
     },
+    created() {
+      this.init();
+    },
     // 滚动和swiperOption相关配置
-    data() {
-      return {
-        swiperEnd: 0,
-        pulling: false, // 是否正在拖动
-        pullDownText: '再拉,再拉就刷给你看',
-        pullUpText: '正在加载',
-        swiperOption: {
+    // data() {
+    //   return {
+    //     pulling: false, // 是否正在拖动
+    //     pullDownText: '再拉,再拉就刷给你看',
+    //     pullUpText: '正在加载',
+    //     swiperOption: {
+    //       direction: 'vertical',
+    //       slidesPerView: 'auto',
+    //       freeMode: true,
+    //       setWrapperSize: true,
+    //       scrollbar: {
+    //         el: this.scrollbar ? '.swiper-scrollbar' : null,
+    //         hide: true
+    //       },
+    //       // 用于获取监听scroll滑动参数
+    //       on: {
+    //         sliderMove: this.scroll,
+    //         touchEnd: this.touchEnd // 下滑事件监听参数获取
+    //       }
+    //     }
+    //   };
+    // },
+    watch: {
+      watchedData() {
+        this.update();
+      }
+    },
+    methods: {
+      // 初始化滚动和swiperOption相关配置
+      init() {
+        this.pulling = false; // 是否正在拖动
+        this.pullDownText = '再拉,再拉就刷给你看';
+        this.pullUpText = '正在加载';
+        this.swiperOption = {
           direction: 'vertical',
           slidesPerView: 'auto',
           freeMode: true,
@@ -87,26 +117,26 @@
           // 用于获取监听scroll滑动参数
           on: {
             sliderMove: this.scroll,
-            touchEnd: this.touchEnd // 下滑事件监听参数获取
+            touchEnd: this.touchEnd, // 滑动事件监听参数监听
+            transitionEnd: this.scrollEnd // 滑动结束位置参数监听
           }
-        }
-      };
-    },
-    watch: {
-      watchedData() {
-        this.update();
-      }
-    },
-    methods: {
+        };
+      },
       // 调用swiper实例下的update刷新滚动条
       update() {
         this.$refs.swiper && this.$refs.swiper.swiper.update();
+      },
+      // 返回顶部接口
+      scrollToTop(speed, runCallback) {
+        this.$refs.swiper && this.$refs.swiper.swiper.slideTo(0, speed, runCallback);
       },
       // 获取swiper组件数据下的swiper属性,设置变更文字的条件
       scroll() {
         const swiper = this.$refs.swiper.swiper;
         // console.log(swiper.translate);
 
+        this.$emit('scroll', swiper.translate, this.$refs.swiper.swiper);
+        // 边界值判断
         if (this.pulling) {
           return;
         }
@@ -143,7 +173,9 @@
         }
         ;
       },
+      // 滑动结束位置参数传递
       scrollEnd() {
+        this.$emit('scroll-end', this.$refs.swiper.swiper.translate, this.$refs.swiper.swiper);
       },
       // 获取swiper组件数据下的swiper属性,下拉后回弹前变更文字
       touchEnd() {
@@ -193,6 +225,9 @@
         swiper.params.virtualTranslate = false; // 定住不回弹
         this.$refs.pullDownLoading.setText(PULL_DOWN_TEXT_END); // 触发下滑后显示的文字
         swiper.setTranslate(0); // 回到最低位置
+        setTimeout(() => {
+          this.$emit('pull-down-transition-end');
+        }, swiper.params.speed);
       },
       pullUpEnd() {
         this.pulling = false; // 是否正在拉

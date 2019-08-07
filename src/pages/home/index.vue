@@ -8,6 +8,8 @@
     <szh-scroll :watchedData="recommends"
                 @pull-down="pullToRefresh"
                 @pull-up="pullToLoadMore"
+                @scroll-end="scrollEnd"
+                ref="scroll"
     >
       <!--      幻灯片组件 传递slider注册参数-->
       <home-slider ref="slider"></home-slider>
@@ -17,7 +19,9 @@
       <home-recommend @loaded="getRecommends" ref="recommend"></home-recommend>
     </szh-scroll>
     <!--    返回顶部组件-->
-    <div class="g-backtop-container"></div>
+    <div class="g-backtop-container">
+      <szh-backtop :visible="isBacktopVisible" @backtop="backToTop"></szh-backtop>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -28,6 +32,7 @@
   import SzhScroll from 'base/scroll';
   import HomeNav from './nav';
   import HomeRecommend from './recommend';
+  import SzhBacktop from 'base/backtop';
 
   export default {
     name: 'Home',
@@ -36,13 +41,19 @@
       HomeSlider,
       SzhScroll,
       HomeNav,
-      HomeRecommend
+      HomeRecommend,
+      SzhBacktop
     },
     data() {
       return {
-        recommends: []
+        recommends: [],
+        // 是否可以返回顶部
+        isBacktopVisible: false
       };
     },
+    // created() {
+    //   this.isBacktopVisible = true;
+    // },
     methods: {
       updateScroll() {
       },
@@ -63,6 +74,14 @@
           }
           end();
         });
+      },
+      // 滚动条最终位置相关事件
+      scrollEnd(translate, scroll) {
+        // 滚过屏高度*0.4开始显示回到顶部按钮
+        this.isBacktopVisible = translate < 0 && -translate > scroll.height * 0.4;
+      },
+      backToTop() {
+        this.$refs.scroll && this.$refs.scroll.scrollToTop();
       }
     }
   };
@@ -77,4 +96,9 @@
     height: 100%;
     background-color: $bgc-theme;
   }
+
+  /*.g-backtop-container {*/
+  /*  width: 45px;*/
+  /*  height: 45px;*/
+  /*}*/
 </style>
