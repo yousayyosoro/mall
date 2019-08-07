@@ -175,7 +175,7 @@
       },
       // 滑动结束位置参数传递
       scrollEnd() {
-        this.$emit('scroll-end', this.$refs.swiper.swiper.translate, this.$refs.swiper.swiper);
+        this.$emit('scroll-end', this.$refs.swiper.swiper.translate, this.$refs.swiper.swiper, this.pulling);
       },
       // 获取swiper组件数据下的swiper属性,下拉后回弹前变更文字
       touchEnd() {

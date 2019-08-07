@@ -66,9 +66,10 @@
       this.init();
     },
     methods: {
+      // 初始化swiper组件参数
       init() {
         this.swiperOption = {
-          watchOverflow: true,
+          watchOverflow: true, // 如果单图是否滑动
           direction: this.direction,
           autoplay: this.interval ? {
             delay: this.interval,

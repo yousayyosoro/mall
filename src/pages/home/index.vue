@@ -1,14 +1,16 @@
 <template>
   <div class="home">
     <header class="g-header-container">
-
-      <home-header></home-header>
+      <!--  头部header组件-->
+      <home-header :class="{'header-transtion': isHeaderTransition }" ref="header"></home-header>
     </header>
     <!--    滚动条组件 监听recommends根据返回的数据定义滚动参数 自定义事件下拉刷新-->
     <szh-scroll :watchedData="recommends"
                 @pull-down="pullToRefresh"
                 @pull-up="pullToLoadMore"
                 @scroll-end="scrollEnd"
+                @scroll="scroll"
+                @pull-down-transition-end="pullDownTransitionEnd"
                 ref="scroll"
     >
       <!--      幻灯片组件 传递slider注册参数-->
@@ -33,6 +35,7 @@
   import HomeNav from './nav';
   import HomeRecommend from './recommend';
   import SzhBacktop from 'base/backtop';
+  import {HEADER_TRANSITION_HEIGHT} from './config';
 
   export default {
     name: 'Home',
@@ -48,7 +51,9 @@
       return {
         recommends: [],
         // 是否可以返回顶部
-        isBacktopVisible: false
+        isBacktopVisible: false,
+        // 是否开启动画
+        isHeaderTransition: false
       };
     },
     // created() {
@@ -66,6 +71,10 @@
         //   end();
         // }, 1000);
       },
+      pullDownTransitionEnd() {
+        this.$refs.header.show();
+      },
+      // 上拉刷新更多
       pullToLoadMore(end) {
         // console.log(this.$refs.recommend);
         this.$refs.recommend.update().then(end).catch(err => {
@@ -75,13 +84,34 @@
           end();
         });
       },
+      // 滚动时改变头部状态
+      scroll(translate) {
+        this.changeHeaderStatus(translate);
+      },
       // 滚动条最终位置相关事件
-      scrollEnd(translate, scroll) {
+      scrollEnd(translate, scroll, pulling) {
+        if (!pulling) {
+          this.changeHeaderStatus(translate);
+        }
+        ;
         // 滚过屏高度*0.4开始显示回到顶部按钮
         this.isBacktopVisible = translate < 0 && -translate > scroll.height * 0.4;
       },
       backToTop() {
         this.$refs.scroll && this.$refs.scroll.scrollToTop();
+      },
+      // 修改头部隐藏状态
+      changeHeaderStatus(translate) {
+        // console.log(translate);
+        if (translate > 0) {
+          // console.log(this.$refs.header.hide());
+          this.$refs.header.hide();
+
+          return;
+        }
+        ;
+        this.$refs.header.show();
+        this.isHeaderTransition = -translate > HEADER_TRANSITION_HEIGHT;
       }
     }
   };
