@@ -9,7 +9,7 @@ branches:
     - master
 
 script:
-  - npm run build
+  - npm run build && echo "gitmall.yw1551.cn" > ./dist/CNAME
 
 deploy:
   provider: pages
